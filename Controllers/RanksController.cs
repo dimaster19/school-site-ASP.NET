@@ -1,42 +1,42 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using School43_ASP.NET.Data;
 using School43_ASP.NET.Models;
-using System.Diagnostics;
 
 namespace School43_ASP.NET.Controllers
 {
-    public class HomeController : Controller
+    public class RanksController : Controller
     {
-
         private readonly SchoolContext _context;
 
-        public HomeController(SchoolContext context)
+        public RanksController(SchoolContext context)
         {
             _context = context;
         }
 
-        // GET: Home
+        // GET: Ranks
         public async Task<IActionResult> Index()
         {
-            ViewData["News"] = await _context.News.OrderByDescending(n => n.Id).Take(5).ToListAsync();
-            ViewData["Notify"] = await _context.Notifies.OrderByDescending(n => n.Id).Take(1).ToListAsync();
-
-            return _context.News!= null ?
-                        View():
-                        Problem("Entity set 'SchoolContext.Home'  is null.");
+              return _context.Ranks != null ? 
+                          View(await _context.Ranks.ToListAsync()) :
+                          Problem("Entity set 'SchoolContext.Ranks'  is null.");
         }
 
-        // GET: Home/Details/5
+        // GET: Ranks/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.News == null)
+            if (id == null || _context.Ranks == null)
             {
                 return NotFound();
             }
 
-            var rank = await _context.News
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var rank = await _context.Ranks
+                .FirstOrDefaultAsync(m => m.ID == id);
             if (rank == null)
             {
                 return NotFound();
@@ -45,13 +45,13 @@ namespace School43_ASP.NET.Controllers
             return View(rank);
         }
 
-        // GET: Home/Create
+        // GET: Ranks/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Home/Create
+        // POST: Ranks/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -67,15 +67,15 @@ namespace School43_ASP.NET.Controllers
             return View(rank);
         }
 
-        // GET: Home/Edit/5
+        // GET: Ranks/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.News == null)
+            if (id == null || _context.Ranks == null)
             {
                 return NotFound();
             }
 
-            var rank = await _context.News.FindAsync(id);
+            var rank = await _context.Ranks.FindAsync(id);
             if (rank == null)
             {
                 return NotFound();
@@ -83,7 +83,7 @@ namespace School43_ASP.NET.Controllers
             return View(rank);
         }
 
-        // POST: Home/Edit/5
+        // POST: Ranks/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -118,16 +118,16 @@ namespace School43_ASP.NET.Controllers
             return View(rank);
         }
 
-        // GET: Home/Delete/5
+        // GET: Ranks/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.News == null)
+            if (id == null || _context.Ranks == null)
             {
                 return NotFound();
             }
 
-            var rank = await _context.News
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var rank = await _context.Ranks
+                .FirstOrDefaultAsync(m => m.ID == id);
             if (rank == null)
             {
                 return NotFound();
@@ -136,29 +136,28 @@ namespace School43_ASP.NET.Controllers
             return View(rank);
         }
 
-        // POST: Home/Delete/5
+        // POST: Ranks/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.News == null)
+            if (_context.Ranks == null)
             {
-                return Problem("Entity set 'SchoolContext.Home'  is null.");
+                return Problem("Entity set 'SchoolContext.Ranks'  is null.");
             }
-            var rank = await _context.News.FindAsync(id);
+            var rank = await _context.Ranks.FindAsync(id);
             if (rank != null)
             {
-                _context.News.Remove(rank);
+                _context.Ranks.Remove(rank);
             }
-
+            
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool RankExists(int id)
         {
-            return (_context.News?.Any(e => e.Id == id)).GetValueOrDefault();
+          return (_context.Ranks?.Any(e => e.ID == id)).GetValueOrDefault();
         }
-
     }
 }

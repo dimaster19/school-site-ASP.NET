@@ -1,6 +1,6 @@
 ﻿namespace School43_ASP.NET.Models
 {
-    public class Resourse
+    public class DistResource
     {
         public int Id { get; set; }
         public string Name { get; set; }

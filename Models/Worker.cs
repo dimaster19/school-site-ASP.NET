@@ -7,10 +7,10 @@
         public int RankId { get; set; }
         public string Photo { get; set; }
         public string FullRank { get; set; }
-        public DateTime CreatedAt { get; set; }
-        public DateTime UpdatedAt { get; set; }
+        public DateTime? CreatedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; }
         public Rank Rank { get; set; }
-        public List<Resourse> Resourses { get; set; }
+        public List<DistResource> Resourses { get; set; }
 
     }
 }
